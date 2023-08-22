@@ -22,20 +22,27 @@ query_detail = {
               }
 
 query_dict = {
-1:
-"""
-SELECT name, COUNT (tasker_accomplishments.accomplished_ID) AS accomplished_tasks  
+1:""" SELECT 
 
-FROM tasker, tasker_accomplishments 
+    t.tasker_id, 
 
-WHERE tasker.tasker_id = tasker_accomplishments.tasker_ID 
+    t.name 
 
-GROUP BY name 
+FROM 
 
-ORDER BY accomplished_tasks DESC 
+    Tasker t 
 
-LIMIT 3;
-""",
+LEFT JOIN Tasker_category tc ON 
+
+    tc.tasker_ID = t.tasker_id 
+
+LEFT JOIN Tasks_category tkc ON 
+
+    tkc.category_id = tc.category_ID 
+
+WHERE 
+
+    tkc.category_id = 10003 AND t.hourly_rate < tkc.Price  """,
 2:"""  """,
 3:"""  """,
 4:"""  """,
