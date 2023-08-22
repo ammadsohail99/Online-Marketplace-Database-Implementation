@@ -14,10 +14,10 @@ engine = create_engine(f"mssql+pyodbc://{secrets['azure']['username']}:{secrets[
 st.title("Taskrabbit- SQL Queries (PROJECT-INSY661)")
 
 for i in range(1, len(query_dict)+1):
-    if i not in [1,2,5,6,7]:
-        st.write("________________________________________________________")
-        st.write(f" {i}: {query_detail[i]}:")
-        st.write("________________________________________________________")
-        st.code(query_dict[i], language="sql")
-        st.write(pd.read_sql(query_dict[i], con=engine))
-   
+    
+    st.write("________________________________________________________")
+    st.write(f" {i}: {query_detail[i]}:")
+    st.write("________________________________________________________")
+    st.code(query_dict[i], language="sql")
+    st.write(pd.read_sql(query_dict[i], con=engine))
+
