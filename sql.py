@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine
 import toml
-import query_dict from queries.py
+from queries.py import query_dict 
 
 
 #connect with an sql database
