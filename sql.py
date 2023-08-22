@@ -18,6 +18,5 @@ engine = create_engine(f"mssql+pyodbc://{secrets['azure']['username']}:{secrets[
 for i in range(1, len(query_dict)+1):
     st.write(f"Query {i}:")
     st.write(query_dict[i])
-    query = query_dict[i]
-    st.write(pd.read_sql(query, con=engine))
+    st.write(pd.read_sql(query_dict[i], con=engine))
    
