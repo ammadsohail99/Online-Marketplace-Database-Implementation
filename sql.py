@@ -7,7 +7,7 @@ import toml
 secrets = toml.load("secrets.toml")
 
 # Connect to SQL database
-engine = sqlalchemy.create_engine(f"mssql+pyodbc://{secrets['azure']['username']}:{secrets['azure']['password']}@{secrets['azure']['server']}/{secrets['azure']['database']}?driver=ODBC+Driver+17+for+SQL+Server")
+engine = create_engine(f"mssql+pyodbc://{secrets['azure']['username']}:{secrets['azure']['password']}@{secrets['azure']['server']}/{secrets['azure']['database']}?driver=ODBC+Driver+17+for+SQL+Server")
 
 query = "SELECT * FROM Tasker"
 
