@@ -35,20 +35,37 @@ WHERE
     tkc.category_id = 10003 AND t.hourly_rate < tkc.Price  """,
 
 2:""" 
-WITH TR AS 
-(SELECT Tasker.tasker_id, Tasker.name, AVG(Review.ratings_for_each) AS ratings 
-FROM Tasker 
-LEFT JOIN Review 
-ON Tasker.tasker_id = Review.tasker_id 
-GROUP BY Tasker.tasker_id) 
-SELECT TR.tasker_id, TR.name, MAX(TR.ratings) as best_rating, TC.category_id, Tasks_category.category_name 
-FROM TR 
-LEFT JOIN Tasker_category TC 
-ON TR.tasker_id = TC.tasker_id 
-LEFT JOIN Tasks_category 
-ON Tasks_category.category_id = TC.category_id 
-WHERE TC.category_id IS NOT NULL and Tasks_category.category_name IS NOT NULL and TR.ratings iS NOT NULL 
-GROUP BY category_name ;  """,
+WITH TR AS (
+    SELECT
+        Tasker.tasker_id,
+        Tasker.name,
+        AVG(Review.ratings_for_each) AS ratings
+    FROM
+        Tasker
+    LEFT JOIN
+        Review ON Tasker.tasker_id = Review.tasker_id
+    GROUP BY
+        Tasker.tasker_id, Tasker.name
+)
+SELECT
+    TR.tasker_id,
+    TR.name,
+    MAX(TR.ratings) AS best_rating,
+    TC.category_id,
+    Tasks_category.category_name
+FROM
+    TR
+LEFT JOIN
+    Tasker_category TC ON TR.tasker_id = TC.tasker_id
+LEFT JOIN
+    Tasks_category ON Tasks_category.category_id = TC.category_id
+WHERE
+    TC.category_id IS NOT NULL
+    AND Tasks_category.category_name IS NOT NULL
+    AND TR.ratings IS NOT NULL
+GROUP BY
+    TR.tasker_id, TR.name, TC.category_id, Tasks_category.category_name;
+  """,
 
 3:""" SELECT  
     CONCAT(first_name, ' ', last_name) AS name, 
@@ -58,64 +75,95 @@ FROM
 WHERE 
     creditlimit >= 1700; """,
 
-4:""" SELECT CONCAT (first_name," ", last_name) AS Names FROM customers 
-INNER JOIN orders ON customers.customer_id = orders.customer_id 
-WHERE orders.order_date BETWEEN NOW () - INTERVAL 7 DAY AND NOW ();   """,
+4:""" SELECT 
+    CONCAT(first_name, ' ', last_name) AS Names
+FROM 
+    customers
+INNER JOIN 
+    orders ON customers.customer_id = orders.customer_id
+WHERE 
+    orders.order_date BETWEEN DATEADD(DAY, -7, GETDATE()) AND GETDATE();
+  """,
 
 5:""" SELECT c.customer_id, c.first_name, c.last_name, COUNT(o.order_id) AS number_of_orders 
 FROM Customers c 
 LEFT JOIN Orders o ON c.customer_id = o.customer_id  
 GROUP BY c.customer_id, c.first_name, c.last_name 
 ORDER BY number_of_orders DESC;  """,
-6:""" WITH OA AS 
-(SELECT A.city, C.customer_id, O.order_id 
-FROM Address A 
-LEFT JOIN Customer_address CA 
-ON A.address_id = CA.address_id 
-LEFT JOIN Customers C 
-ON CA.customer_id = C.customer_id 
-LEFT JOIN Orders O 
-ON O.customer_id = C.customer_id) 
 
-SELECT city, category_name, MAX(counts) as max_count 
-FROM( 
-	SELECT distinct OA.city, TC.category_name, COUNT(TC.category_name) AS counts 
-	FROM OA 
-	LEFT JOIN Order_details 
-	ON OA.order_id = Order_details.order_id 
-	LEFT JOIN Tasks_category TC 
-	ON TC.category_id = Order_details.Category_id 
-	WHERE TC.category_id IS NOT NULL 
-	GROUP BY OA.city 
-) t1 
-GROUP BY category_name;  """,
+6:""" WITH OA AS (
+    SELECT
+        A.city,
+        C.customer_id,
+        O.order_id
+    FROM
+        Address A
+    LEFT JOIN
+        Customer_address CA ON A.address_id = CA.address_id
+    LEFT JOIN
+        Customers C ON CA.customer_id = C.customer_id
+    LEFT JOIN
+        Orders O ON O.customer_id = C.customer_id
+)
+SELECT
+    city,
+    category_name,
+    MAX(counts) AS max_count
+FROM (
+    SELECT
+        OA.city,
+        TC.category_name,
+        COUNT(TC.category_name) AS counts
+    FROM
+        OA
+    LEFT JOIN
+        Order_details ON OA.order_id = Order_details.order_id
+    LEFT JOIN
+        Tasks_category TC ON TC.category_id = Order_details.Category_id
+    WHERE
+        TC.category_id IS NOT NULL
+    GROUP BY
+        OA.city, TC.category_name
+) t1
+GROUP BY
+    city, category_name;
+ """,
 
-7:""" SELECT A.customer_id 
-	, CONCAT(A.first_name," ", A.last_name) as customer_name 
-    , A.email 
-    , A.phone 
-    , SUM(B.amount) AS TOT_Payment_AMT 
-	FROM Customers A 
-	LEFT JOIN Payments B 
-	ON A.customer_id = B.customer_id 
-	GROUP BY A.customer_id 
-    ORDER BY SUM(B.amount) DESC;  """,
+7:""" SELECT
+    A.customer_id,
+    CONCAT(A.first_name, ' ', A.last_name) AS customer_name,
+    A.email,
+    A.phone,
+    SUM(B.amount) AS TOT_Payment_AMT
+FROM
+    Customers A
+LEFT JOIN
+    Payments B ON A.customer_id = B.customer_id
+GROUP BY
+    A.customer_id, A.first_name, A.last_name, A.email, A.phone
+ORDER BY
+    TOT_Payment_AMT DESC;
+  """,
 
 8:""" SELECT vehicle_name 
 , COUNT(tasker_id) AS COUNT 
 FROM Vehicles 
 GROUP BY vehicle_name;  """,
 
-9:""" SELECT A.Skill_ID 
-, B.skill_name 
-    , B.skill_proficiency 
-, COUNT(A.tasker_id) AS COUNT  
-FROM tasker A 
-LEFT JOIN Skill B 
-ON A.Skill_ID = B.skill_ID 
-GROUP BY Skill_ID 
-ORDER BY COUNT(tasker_id) DESC 
-LIMIT 3;  """,
+9:""" SELECT TOP 3
+    B.skill_id,
+    B.skill_name,
+    B.skill_proficiency,
+    COUNT(A.tasker_id) AS tasker_count
+FROM
+    tasker A
+LEFT JOIN
+    Skill B ON A.Skill_ID = B.skill_id
+GROUP BY
+    B.skill_id, B.skill_name, B.skill_proficiency
+ORDER BY
+    tasker_count DESC;
+  """,
 
 10:""" SELECT A.* 
     , C.NAME as Tasker_Assigned 
@@ -129,11 +177,11 @@ LEFT JOIN Order_details B
 ON A.order_id = B.order_id 
 LEFT JOIN Tasker C 
 ON B.tasker_id = C.tasker_id 
-WHERE STATUS = "Pending";  """,
+WHERE A.status = 'Pending';  """,
 
 11:""" SELECT 
     s.name, 
-    AVG(s.ratings_for_each) as AVG_RATINGS 
+    AVG(s.ratings_for_each) AS AVG_RATINGS 
 FROM 
     ( 
     SELECT 
@@ -143,12 +191,15 @@ FROM
         Tasker t 
     LEFT JOIN review r ON 
         r.tasker_id = t.tasker_id 
-) s 
-GROUP BY  1 
-HAVING AVG(s.ratings_for_each) IS NOT NULL 
-ORDER BY 2 
-
-LIMIT 3;  """,
+    ) AS s 
+GROUP BY 
+    s.name 
+HAVING 
+    AVG(s.ratings_for_each) IS NOT NULL 
+ORDER BY 
+    AVG_RATINGS 
+OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY;
+ """,
 
 12:""" SELECT tc.category_ID, tcat.category_name, AVG(r.ratings_for_each) AS average_rating 
 FROM Tasker_category tc 
@@ -165,32 +216,41 @@ JOIN Tasker t ON tc.tasker_ID = t.tasker_id
 GROUP BY tcat.category_id, tcat.category_name 
 ORDER BY average_hourly_rate DESC;  """,
 
-14:""" SELECT OC.customer_id, OC.first_name, OC.last_name, SUM(P.amount + P.donation_amt) AS total_refund 
-FROM 
-(SELECT O.*, C.first_name, C.last_name 
-FROM Orders O, Customers C 
-WHERE O.customer_id = 1 and C.customer_id= 1 AND O.`status` = 'Processing') OC, Payments P 
-WHERE OC.customer_id = P.customer_id 
-GROUP BY customer_id;  """,
+14:""" SELECT
+    OC.customer_id,
+    OC.first_name,
+    OC.last_name,
+    SUM(P.amount + P.donation_amt) AS total_refund
+FROM (
+    SELECT O.*, C.first_name, C.last_name
+    FROM Orders O
+    JOIN Customers C ON O.customer_id = C.customer_id
+    WHERE O.customer_id = 1 AND O.status = 'Processing'
+) AS OC
+JOIN Payments P ON OC.customer_id = P.customer_id
+GROUP BY OC.customer_id, OC.first_name, OC.last_name;
+ """,
 
-15:""" SELECT 
-    tc.category_ID, 
-    tkc.category_name, 
-    COUNT(tc.category_ID) as Total_Orders_category 
-FROM 
-    Orders o 
-LEFT JOIN Order_details od ON 
-    od.order_id = o.order_id 
-LEFT JOIN Tasker t ON 
-    t.tasker_id = od.tasker_id 
-LEFT JOIN Tasker_category tc ON 
-    tc.tasker_id = t.tasker_id 
-LEFT JOIN Tasks_category tkc ON 
-    tkc.category_id = tc.category_ID 
-GROUP BY  1 
-ORDER BY 1 
-DESC 
-LIMIT 1;  """,
+15:""" SELECT TOP 1
+    tc.category_ID,
+    tkc.category_name,
+    COUNT(tc.category_ID) AS Total_Orders_category
+FROM
+    Orders o
+LEFT JOIN
+    Order_details od ON od.order_id = o.order_id
+LEFT JOIN
+    Tasker t ON t.tasker_id = od.tasker_id
+LEFT JOIN
+    Tasker_category tc ON tc.tasker_id = t.tasker_id
+LEFT JOIN
+    Tasks_category tkc ON tkc.category_id = tc.category_ID
+GROUP BY
+    tc.category_ID, tkc.category_name
+ORDER BY
+    Total_Orders_category DESC;
+  """,
+
 16:""" SELECT  
     c.first_name,  
     c.last_name,  
@@ -217,40 +277,55 @@ LEFT JOIN Tasks_category tkc ON
     tkc.category_id = tc.category_ID 
 WHERE 
     tkc.category_id = 10003 AND t.hourly_rate < tkc.Price; """,
-18:""" ALTER TABLE tasker 
-ADD COLUMN avg_rating DECIMAL(3,2); 
-UPDATE tasker 
-JOIN ( 
-    SELECT tasker_ID, AVG(ratings_for_each) AS avg_rating 
-    FROM review 
-    GROUP BY tasker_ID 
-) AS avg_reviews ON avg_reviews.tasker_ID = tasker.tasker_ID 
-SET tasker.avg_rating = avg_reviews.avg_rating;  """,
-19:""" SELECT tasker.name, tasker.avg_rating, COUNT(tasker_accomplishments.accomplished_ID) AS accomplished_tasks    
-FROM tasker, tasker_accomplishments   
-WHERE tasker.tasker_id = tasker_accomplishments.tasker_ID   
-GROUP BY tasker.name, tasker.avg_rating  """,
-20:""" 
-WITH CT AS 
-(SELECT Customers.customer_id, Tasks_category.category_id, OD.quantity 
-FROM Customers 
-INNER JOIN Orders 
-ON Customers.customer_id = Orders.customer_id 
-INNER JOIN Order_details OD 
-ON OD.order_id = Orders.order_id 
-INNER JOIN Tasks_category 
-ON Tasks_category.category_id = OD.category_id) 
 
-SELECT t2.customer_id, t2.category_id, SUM(t2.quantity) AS same_purchased 
-FROM 
-	(SELECT distinct customer_id, category_id 
-    FROM CT 
-    WHERE customer_id = 1) t1, 
-    (SELECT distinct customer_id, category_id, quantity 
-    FROM CT 
-    WHERE customer_id != 1) t2 
-WHERE t1.category_id = t2.category_id 
-GROUP BY t2.customer_id 
-ORDER BY same_purchased DESC 
-LIMIT 1;  """
+18:""" select 'to be done' """,
+
+19:""" select 'to be done'  """,
+
+20:""" 
+WITH CT AS (
+    SELECT
+        Customers.customer_id,
+        Tasks_category.category_id,
+        OD.quantity
+    FROM
+        Customers
+    INNER JOIN
+        Orders ON Customers.customer_id = Orders.customer_id
+    INNER JOIN
+        Order_details OD ON OD.order_id = Orders.order_id
+    INNER JOIN
+        Tasks_category ON Tasks_category.category_id = OD.category_id
+)
+
+SELECT TOP 1
+    t2.customer_id,
+    t2.category_id,
+    SUM(t2.quantity) AS same_purchased
+FROM (
+    SELECT DISTINCT
+        customer_id,
+        category_id
+    FROM
+        CT
+    WHERE
+        customer_id = 1
+) t1
+CROSS JOIN (
+    SELECT DISTINCT
+        customer_id,
+        category_id,
+        quantity
+    FROM
+        CT
+    WHERE
+        customer_id != 1
+) t2
+WHERE
+    t1.category_id = t2.category_id
+GROUP BY
+    t2.customer_id, t2.category_id
+ORDER BY
+    same_purchased DESC;
+ """
               }
