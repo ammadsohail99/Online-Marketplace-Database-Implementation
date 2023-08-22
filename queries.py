@@ -20,17 +20,7 @@ query_detail = {1:"top 3 taskers with the most accomplished tasks ",
               20:""
               }
 
-query_dict = {1:"""SELECT name, COUNT (tasker_accomplishments.accomplished_ID) AS accomplished_tasks  
-
-FROM tasker, tasker_accomplishments 
-
-WHERE tasker.tasker_id = tasker_accomplishments.tasker_ID 
-
-GROUP BY name 
-
-ORDER BY accomplished_tasks DESC 
-
-LIMIT 3; """,
+query_dict = {1:"""SELECT * FROM Tasker""",
               2:"SELECT * FROM Tasker ",
               3:"SELECT * FROM Tasker ",
               4:"SELECT * FROM Tasker ",
