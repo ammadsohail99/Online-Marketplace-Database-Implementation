@@ -17,6 +17,6 @@ for i in range(1, len(query_dict)+1):
     st.write("________________________________________________________")
     st.write(f" {i}: {query_detail[i]}:")
     st.write("________________________________________________________")
-    st.write(query_dict[i])
+    st.code(query_dict[i], language="sql")
     st.write(pd.read_sql(query_dict[i], con=engine))
    
