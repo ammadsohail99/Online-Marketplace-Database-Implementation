@@ -19,7 +19,8 @@ for i in range(1, len(query_dict)+1):
     st.write(f" {i}: {query_detail[i]}:")
     st.write("________________________________________________________")
     st.code(query_dict[i], language="sql")
-    st.write(pd.read_sql(query_dict[i], con=engine, index_col=None))
+    st.write(pd.read_sql(query_dict[i], con=engine, hide_index=True))
+    
 
 
 #the above code is for the streamlit app to display the queries and their results in a nice format 
