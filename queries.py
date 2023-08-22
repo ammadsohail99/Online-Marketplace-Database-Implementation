@@ -1,43 +1,58 @@
-query_detail = {1:"top 3 taskers with the most accomplished tasks ",
-              2:"SELECT * FROM Tasker ",
-              3:"SELECT * FROM Tasker ",
-              4:"SELECT * FROM Tasker ",
-              5:"SELECT * FROM Tasker ",
-              6:"SELECT * FROM Tasker ",
-              7:"SELECT * FROM Tasker ",
-              8:"SELECT * FROM Tasker ",
-              9:"SELECT * FROM Tasker ",
-              10:"SELECT * FROM Tasker ",
-              11:"SELECT * FROM Tasker ",
-              12:"SELECT * FROM Tasker ",
-              13:"SELECT * FROM Tasker ",
-              14:"SELECT * FROM Tasker ",
-              15:"SELECT * FROM Tasker ",
-              16:"SELECT * FROM Tasker ",
-              17:" ",
-              18:" ",
-              19:" ",
-              20:""
+query_detail = {
+              1:"Top 3 taskers with the most accomplished tasks ",
+              2:"Best tasker in each category in terms of rating and experience ",
+              3:"SRetrieve customer names and email addresses for those who have a credit limit greater than a 1700$ ",
+              4:"List all the customers who have placed orders within last 7 days.  ",
+              5:"Get a count of orders placed by each customer.",
+              6:"Find the top selling task category by city ",
+              7:"Customers LTV(Lifetime value) ordered in Descending order ",
+              8:"Get Count of taskers for each vehicle category ",
+              9:"Top 3 most common skills among taskers",
+              10:"Display all the orders in pending status ",
+              11:"List 3 taskers having worst rating ",
+              12:"Retrieve the average rating of taskers in each category ",
+              13:"Average hourly rate for each category ",
+              14:"Ask for refund for unsatisfied task",
+              15:"Find the most popular task category based on the total number of orders in that category ",
+              16:"Show the addresses of customers along with their names and contact information.",
+              17:"Taskers who have hourly rate below the category rate for plumbing category ",
+              18:"Write a query to add a column in tasker table to add avg(rating) for each  ",
+              19:"average rating, total no. of tasks accomplished for each tasker  ",
+              20:"find the most similar user for customer 1 according to task category"
               }
 
-query_dict = {1:"""SELECT * FROM Tasker""",
-              2:"SELECT * FROM Tasker ",
-              3:"SELECT * FROM Tasker ",
-              4:"SELECT * FROM Tasker ",
-              5:"SELECT * FROM Tasker ",
-              6:"SELECT * FROM Tasker ",
-              7:"SELECT * FROM Tasker ",
-              8:"SELECT * FROM Tasker ",
-              9:"SELECT * FROM Tasker ",
-              10:"SELECT * FROM Tasker ",
-              11:"SELECT * FROM Tasker ",
-              12:"SELECT * FROM Tasker ",
-              13:"SELECT * FROM Tasker ",
-              14:"SELECT * FROM Tasker ",
-              15:"SELECT * FROM Tasker ",
-              16:"SELECT * FROM Tasker ",
-              17:"SELECT * FROM Tasker ",
-              18:"SELECT * FROM Tasker ",
-              19:"SELECT * FROM Tasker ",
-              20:"SELECT * FROM Tasker "
+query_dict = {
+1:
+"""
+SELECT name, COUNT (tasker_accomplishments.accomplished_ID) AS accomplished_tasks  
+
+FROM tasker, tasker_accomplishments 
+
+WHERE tasker.tasker_id = tasker_accomplishments.tasker_ID 
+
+GROUP BY name 
+
+ORDER BY accomplished_tasks DESC 
+
+LIMIT 3;
+""",
+2:"""  """,
+3:"""  """,
+4:"""  """,
+5:"""  """,
+6:"""  """,
+7:"""  """,
+8:"""  """,
+9:"""  """,
+10:"""  """,
+11:"""  """,
+12:"""  """,
+13:"""  """,
+14:"""  """,
+15:"""  """,
+16:"""  """,
+17:"""  """,
+18:"""  """,
+19:"""  """,
+20:"""  """
               }
