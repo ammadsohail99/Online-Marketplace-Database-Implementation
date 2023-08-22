@@ -1,6 +1,6 @@
 query_detail = {
               1:"Top 3 taskers with the most accomplished tasks ",
-              2:"Best tasker in each category in terms of rating and experience ",
+              #2:"Best tasker in each category in terms of rating and experience ",
               3:"SRetrieve customer names and email addresses for those who have a credit limit greater than a 1700$ ",
               4:"List all the customers who have placed orders within last 7 days.  ",
               5:"Get a count of orders placed by each customer.",
@@ -34,22 +34,21 @@ LEFT JOIN Tasks_category tkc ON
 WHERE 
     tkc.category_id = 10003 AND t.hourly_rate < tkc.Price  """,
 
-2:""" 
-WITH TR AS 
-(SELECT Tasker.tasker_id, Tasker.name, AVG(Review.ratings_for_each) AS ratings 
-FROM Tasker 
-LEFT JOIN Review 
-ON Tasker.tasker_id = Review.tasker_id 
-GROUP BY Tasker.tasker_id) 
-SELECT TR.tasker_id, TR.name, MAX(TR.ratings) as best_rating, TC.category_id, Tasks_category.category_name 
-FROM TR 
-LEFT JOIN Tasker_category TC 
-ON TR.tasker_id = TC.tasker_id 
-LEFT JOIN Tasks_category 
-ON Tasks_category.category_id = TC.category_id 
-WHERE TC.category_id IS NOT NULL and Tasks_category.category_name IS NOT NULL and TR.ratings iS NOT NULL 
-GROUP BY category_name 
-;  """,
+# 2:""" 
+# WITH TR AS 
+# (SELECT Tasker.tasker_id, Tasker.name, AVG(Review.ratings_for_each) AS ratings 
+# FROM Tasker 
+# LEFT JOIN Review 
+# ON Tasker.tasker_id = Review.tasker_id 
+# GROUP BY Tasker.tasker_id) 
+# SELECT TR.tasker_id, TR.name, MAX(TR.ratings) as best_rating, TC.category_id, Tasks_category.category_name 
+# FROM TR 
+# LEFT JOIN Tasker_category TC 
+# ON TR.tasker_id = TC.tasker_id 
+# LEFT JOIN Tasks_category 
+# ON Tasks_category.category_id = TC.category_id 
+# WHERE TC.category_id IS NOT NULL and Tasks_category.category_name IS NOT NULL and TR.ratings iS NOT NULL 
+# GROUP BY category_name ;  """,
 
 3:""" SELECT  
     CONCAT(first_name, ' ', last_name) AS name, 
