@@ -23,25 +23,15 @@ query_detail = {
 
 query_dict = {
 1:""" SELECT 
-
     t.tasker_id, 
-
     t.name 
-
 FROM 
-
     Tasker t 
-
 LEFT JOIN Tasker_category tc ON 
-
     tc.tasker_ID = t.tasker_id 
-
 LEFT JOIN Tasks_category tkc ON 
-
     tkc.category_id = tc.category_ID 
-
 WHERE 
-
     tkc.category_id = 10003 AND t.hourly_rate < tkc.Price  """,
 2:"""  """,
 3:"""  """,
