@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 import toml
 
-query_dict = {1:"SELECT * FROM Tasker"
+query_dict = {1:"SELECT * FROM Tasker",
               2:"SELECT * FROM Tasker WHERE TaskerID = 1"
 
               }
