@@ -1,6 +1,6 @@
 # import the Streamlit library
 import streamlit as st
-
+import matplotlib.pyplot as plt
 # Create a title for the app
 st.title("Sample Streamlit App By Krishan Gupta")
 
