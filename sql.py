@@ -10,8 +10,8 @@ secrets = toml.load("secrets.toml")
 engine = sqlalchemy.create_engine(f"mssql+pyodbc://{secrets['azure']['username']}:{secrets['azure']['password']}@{secrets['azure']['server']}/{secrets['azure']['database']}?driver=ODBC+Driver+17+for+SQL+Server")
 
 query = "SELECT * FROM Tasker"
-data = pd.read_sql(query, engine)
 
 
-st.write("Displaying data from SQL database:")
-st.dataframe(data)
+df = pd.read_sql(query, con=engine)
+st.write(df)
+   
