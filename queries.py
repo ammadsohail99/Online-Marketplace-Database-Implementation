@@ -16,8 +16,8 @@ query_detail = {
               15:"Find the most popular task category based on the total number of orders in that category ",
               16:"Show the addresses of customers along with their names and contact information.",
               17:"Taskers who have hourly rate below the category rate for plumbing category ",
-              18:" Get tasker name with maximum and minimum hourly rate",
-              19:"Average rating, total no. of tasks accomplished for each tasker ",
+              18:"Get tasker name with maximum and minimum hourly rate",
+              19:"Write a Query which can be used to insert Average rating column in the tasker table",
               20:"Find the most similar user for customer 1 according to task category"
               }
 
@@ -290,7 +290,13 @@ WHERE tasker.hourly_rate = (SELECT MIN(hourly_rate) FROM tasker)
 
 ORDER BY 3 """,
 
-19:""" select 'to be done'  """,
+19:""" SELECT  AVG(ratings_for_each) AS avg_rating 
+
+FROM review,tasker
+
+WHERE review.tasker_ID = tasker.tasker_ID
+
+GROUP BY name """,
 
 20:""" 
 WITH CT AS (
