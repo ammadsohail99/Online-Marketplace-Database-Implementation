@@ -17,7 +17,7 @@ query_detail = {
               16:"Show the addresses of customers along with their names and contact information.",
               17:"Taskers who have hourly rate below the category rate for plumbing category ",
               18:" Get tasker name with maximum and minimum hourly rate",
-              19:"Average rating, total no. of tasks accomplished for each tasker  ",
+              19:"Average rating, total no. of tasks accomplished for each tasker ",
               20:"Find the most similar user for customer 1 according to task category"
               }
 
@@ -278,7 +278,17 @@ LEFT JOIN Tasks_category tkc ON
 WHERE 
     tkc.category_id = 10003 AND t.hourly_rate < tkc.Price; """,
 
-18:""" select 'to be done' """,
+18:""" SELECT 
+    tasker.name, tasker.hourly_rate, 'MAX' AS "Maximum/Minimum"
+FROM tasker
+WHERE tasker.hourly_rate = (SELECT MAX(hourly_rate) FROM tasker)
+UNION
+SELECT 
+    tasker.name, tasker.hourly_rate, 'MIN' AS "Maximum/Minimum"
+FROM tasker
+WHERE tasker.hourly_rate = (SELECT MIN(hourly_rate) FROM tasker)
+
+ORDER BY 3 """,
 
 19:""" select 'to be done'  """,
 
