@@ -1,7 +1,7 @@
 query_detail = {
               1:"Top 3 taskers with the most accomplished tasks ",
               2:"Best tasker in each category in terms of rating and experience ",
-              3:"SRetrieve customer names and email addresses for those who have a credit limit greater than a 1700$ ",
+              3:"Retrieve customer names and email addresses for those who have a credit limit greater than a 1700$ ",
               4:"List all the customers who have placed orders within last 7 days.  ",
               5:"Get a count of orders placed by each customer.",
               6:"Find the top selling task category by city ",
