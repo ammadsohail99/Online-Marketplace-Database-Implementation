@@ -32,7 +32,7 @@ LEFT JOIN Tasker_category tc ON
 LEFT JOIN Tasks_category tkc ON 
     tkc.category_id = tc.category_ID 
 WHERE 
-    tkc.category_id = 10003 AND t.hourly_rate < tkc.Price  """,
+    tkc.category_id = 10003 AND t.hourly_rate < tkc.Price;  """,
 
 2:""" 
 WITH TR AS (
@@ -288,7 +288,7 @@ SELECT
 FROM tasker
 WHERE tasker.hourly_rate = (SELECT MIN(hourly_rate) FROM tasker)
 
-ORDER BY 3 """,
+ORDER BY 3 ;""",
 
 19:""" SELECT  AVG(ratings_for_each) AS avg_rating 
 
@@ -296,7 +296,7 @@ FROM review,tasker
 
 WHERE review.tasker_ID = tasker.tasker_ID
 
-GROUP BY name """,
+GROUP BY name; """,
 
 20:""" 
 WITH CT AS (
