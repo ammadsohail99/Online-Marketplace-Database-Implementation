@@ -5,11 +5,15 @@ import toml
 from queries import query_dict, query_detail
 
 
-#connect with an sql database
-secrets = toml.load("secrets.toml")
+[azure]
+username = "taskrabbit2"
+password = "Ttokay3345#"
+server = "taskrabbit2.database.windows.net"
+database = "taskrabbitdb"
 
-# Connect to SQL database
-engine = create_engine(f"mssql+pyodbc://{secrets['azure']['username']}:{secrets['azure']['password']}@{secrets['azure']['server']}/{secrets['azure']['database']}?driver=ODBC+Driver+17+for+SQL+Server")
+
+# Connect to Azure database
+engine = create_engine(f"mssql+pyodbc://{azure_username}:{azure_password}@{azure_server}/{azure_database}?driver=ODBC+Driver+17+for+SQL+Server")
 
 st.title("Group 1: Taskrabbit SQL Queries")
 
