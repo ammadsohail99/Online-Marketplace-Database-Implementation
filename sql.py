@@ -11,7 +11,7 @@ secrets = toml.load("secrets.toml")
 # Connect to SQL database
 engine = create_engine(f"mssql+pyodbc://{secrets['azure']['username']}:{secrets['azure']['password']}@{secrets['azure']['server']}/{secrets['azure']['database']}?driver=ODBC+Driver+17+for+SQL+Server")
 
-st.title("Taskrabbit SQL Queries \n Group 1")
+st.title("Group 1: Taskrabbit SQL Queries")
 
 
 
