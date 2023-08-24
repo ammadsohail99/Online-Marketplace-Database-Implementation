@@ -18,7 +18,7 @@ query_detail = {
               17:"Taskers who have hourly rate below the category rate for plumbing category ",
               18:"Get tasker name with maximum and minimum hourly rate",
               19:"Write a Query which can be used to insert Average rating column in the tasker table",
-              20:"Find the most similar user for customer 1 according to task category"
+              20:"Find the most similar user for customer id = 1 according to task category"
               }
 
 query_dict = {
