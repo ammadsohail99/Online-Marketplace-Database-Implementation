@@ -13,6 +13,23 @@ engine = create_engine(f"mssql+pyodbc://{secrets['azure']['username']}:{secrets[
 
 st.title("Taskrabbit- SQL Queries (PROJECT-INSY661)")
 
+
+# Input area for custom query
+custom_query = st.text_area("Enter your custom SQL query here:")
+
+if st.button("Run Custom Query"):
+    st.write("Running Custom Query:")
+    st.code(custom_query, language="sql")
+    
+    try:
+        # Execute custom query and display results
+        result = pd.read_sql(custom_query, con=engine)
+        st.write("Query Result:")
+        st.write(result)
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+
+
 for i in range(1, len(query_dict)+1):
     
     st.write("________________________________________________________")
@@ -21,6 +38,3 @@ for i in range(1, len(query_dict)+1):
     st.code(query_dict[i], language="sql")
     st.write(pd.read_sql(query_dict[i], con=engine, index_col=None))
     
-
-
-#the above code is for the streamlit app to display the queries and their results in a nice format 
