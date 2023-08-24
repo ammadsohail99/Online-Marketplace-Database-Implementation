@@ -22,17 +22,15 @@ query_detail = {
               }
 
 query_dict = {
-1:""" SELECT 
-    t.tasker_id, 
-    t.name 
-FROM 
-    Tasker t 
-LEFT JOIN Tasker_category tc ON 
-    tc.tasker_ID = t.tasker_id 
-LEFT JOIN Tasks_category tkc ON 
-    tkc.category_id = tc.category_ID 
-WHERE 
-    tkc.category_id = 10003 AND t.hourly_rate < tkc.Price;  """,
+1:""" SELECT TOP 3 name, COUNT (tasker_accomplishments.accomplished_ID) AS accomplished_tasks  
+
+FROM tasker, tasker_accomplishments 
+
+WHERE tasker.tasker_id = tasker_accomplishments.tasker_ID 
+
+GROUP BY name 
+
+ORDER BY accomplished_tasks DESC ;  """,
 
 2:""" 
 WITH TR AS (
