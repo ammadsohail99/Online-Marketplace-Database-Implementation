@@ -5,11 +5,11 @@ import toml
 from queries import query_dict, query_detail
 
 
-[azure]
-username = "taskrabbit2"
-password = "Ttokay3345#"
-server = "taskrabbit2.database.windows.net"
-database = "taskrabbitdb"
+# Get secrets from Streamlit's secrets API
+azure_username = st.secrets["azure_username"]
+azure_password = st.secrets["azure_password"]
+azure_server = st.secrets["azure_server"]
+azure_database = st.secrets["azure_database"]
 
 
 # Connect to Azure database
