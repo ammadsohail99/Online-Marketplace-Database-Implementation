@@ -13,8 +13,9 @@ engine = create_engine(f"mssql+pyodbc://{secrets['azure']['username']}:{secrets[
 
 st.title("Group 1: Taskrabbit SQL Queries")
 
-# Display ERD Diagram
-st.image("Database_Project_ERD.jpg", use_column_width=True, caption="ERD Diagram")
+# Display ERD Diagram using a link
+erd_image_link = "https://storagekg33.blob.core.windows.net/containerk1/Database_Project_ERD.jpeg"
+st.image(erd_image_link, use_column_width=True, caption="ERD Diagram")
 
 # Input area for custom query
 custom_query = st.text_area("Enter your custom SQL query here:")
