@@ -1,1 +1,1 @@
-Database design and implementation on Azure Cloud
+Database design and implementation on AWS (Amazon Web Services)
